@@ -70,6 +70,9 @@ public class DebounceSearchEmitterFragment
         super.onActivityCreated(savedInstanceState);
         _setupLogger();
 
+        /**
+         * debounce用于发射 在一段时间 最后的Observable
+         */
         _subscription = RxTextView.textChangeEvents(_inputSearchText)//
               .debounce(400, TimeUnit.MILLISECONDS)// default Scheduler is Computation
               .observeOn(AndroidSchedulers.mainThread())//

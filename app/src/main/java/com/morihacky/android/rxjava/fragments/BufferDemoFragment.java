@@ -82,6 +82,15 @@ public class BufferDemoFragment
     // -----------------------------------------------------------------------------------
     // Main Rx entities
 
+    /**
+     * buffer() 函数将源Observable变换一个新的Observable，这个新的
+       Observable每次发射一组列表值而不是一个一个发射。
+
+       buffer有很多个变体 带count每次发送一组 大小为count的数据
+       带 timespan 创建一个每隔timespan时间段就会发射一个列表的Observable
+     * 说白了 buffer 用来执行累加操作的......
+     */
+
     private Subscription _getBufferedSubscription() {
         return RxView.clickEvents(_tapBtn)
               .map(new Func1<ViewClickEvent, Integer>() {
@@ -89,10 +98,10 @@ public class BufferDemoFragment
                   public Integer call(ViewClickEvent onClickEvent) {
                       Timber.d("--------- GOT A TAP");
                       _log("GOT A TAP");
-                      return 1;
+                      return 1; //如果点击了就返回1
                   }
               })
-              .buffer(2, TimeUnit.SECONDS)
+              .buffer(2, TimeUnit.SECONDS) //每两秒 发射 点击view的次数 就是每隔一段时间发射一个Observable列表
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe(new Observer<List<Integer>>() {
 

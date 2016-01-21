@@ -68,11 +68,12 @@ public class ConcurrencyWithSchedulersDemoFragment
         _log("Button Clicked");
 
         _subscription = _getObservable()//
-              .subscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
+              .subscribeOn(Schedulers.io()) //执行call 方法在io线程执行
+              .observeOn(AndroidSchedulers.mainThread()) //主线程响应 Observer(观察者)的回调 ##observeOn在操作前调用 比如有什么map的##
               .subscribe(_getObserver());                             // Observer
     }
 
+    //生成Observable(被观察者)对象
     private Observable<Boolean> _getObservable() {
         return Observable.just(true).map(new Func1<Boolean, Boolean>() {
             @Override
